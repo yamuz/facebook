@@ -1,7 +1,7 @@
 package com.akvelon.facebook.controller.websocket;
 
-import com.akvelon.facebook.dto.RequestDto;
-import com.akvelon.facebook.dto.UserDto;
+import com.akvelon.facebook.dto.websocket.RequestDto;
+import com.akvelon.facebook.dto.websocket.WebsocketUserDto;
 import com.akvelon.facebook.service.interfaces.UserFriendshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,7 +23,7 @@ public class FriendshipController {
                 userFriendshipService.createRequestForFriendship(requestDto.getRequestFromUserId(), requestDto.getRequestToUserId()));
     }
 
-    private void sendMessage(String destination, UserDto requestFromUser) {
+    private void sendMessage(String destination, WebsocketUserDto requestFromUser) {
         messagingTemplate.convertAndSend(destination, requestFromUser);
     }
 

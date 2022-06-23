@@ -7,3 +7,5 @@ spring:
   jpa:
     database: postgresql
     generate-ddl: true
+  mvc:
+    static-path-pattern: /static/**
