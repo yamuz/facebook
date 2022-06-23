@@ -1,0 +1,53 @@
+POST localhost:8080/register
+Content-Type: application/json
+
+{
+    "firstName": "almaz",
+    "lastName": "abdrayev",
+    "email": "yamuuzz@gmail.com",
+    "password":"123",
+    "phone": "8798798797",
+    "address": "Almaty, KZ"
+}
+
+###
+POST localhost:8080/login
+Content-Type: application/json
+
+{
+  "email":"yamuuzz@gmail.com",
+  "password":"123"
+}
+
+###
+
+GET http://localhost:8080/registrationConfirm?token=42c21630-6cee-4282-a4cc-3d59f41272f0
+Content-Type: application/json
+
+{
+  "email":"yamuuzz@gmail.com",
+  "password":"123"
+}
+
+
+###
+POST localhost:8080/email
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11ekBnbWFpbC5ydSIsImV4cCI6MTY1NzIyNzYwMH0.EZbP8E117TNU84TS-PGCuS8OHdo3EkbdJ0J5i6_mEod5xEOFBnNuPlYb42BiBsyIqrLieQToML-PBWhpQNWMiQ
+
+{
+  "email":"yamuz@gmail.ru",
+  "password":"123"
+}
+
+###
+POST localhost:80/users/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11ekBnbWFpbC5ydSIsImV4cCI6MTY1NzIyNzYwMH0.EZbP8E117TNU84TS-PGCuS8OHdo3EkbdJ0J5i6_mEod5xEOFBnNuPlYb42BiBsyIqrLieQToML-PBWhpQNWMiQ
+
+{
+  "firstName": "abdrahman",
+  "lastName": "abdrayev",
+  "email": "yamuz@gmail.ru",
+  "password":"123"
+}
