@@ -41,7 +41,7 @@ public class UserFriendshipServiceImpl implements UserFriendshipService {
                     .build());
             return mapUserToUserDto(userService.findById(userId));
         }
-        throw new RuntimeException("It`s your friend");
+        throw new RuntimeException("Friendship request send");
     }
 
     @Override
