@@ -1,4 +1,4 @@
-package com.akvelon.facebook.dto;
+package com.akvelon.facebook.dto.websocket;
 
 import lombok.Builder;
 import lombok.Data;

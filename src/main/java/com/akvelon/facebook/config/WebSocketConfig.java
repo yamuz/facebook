@@ -11,11 +11,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final static String FRIEND_TOPIC = "/friend.topic";
+    private final static String CHAT_TOPIC = "/chat.topic";
     private final static String SOCKET_REGISTRY = "/ws";
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker(FRIEND_TOPIC);
+        config.enableSimpleBroker(FRIEND_TOPIC, CHAT_TOPIC);
     }
 
     @Override

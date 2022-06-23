@@ -1,11 +1,11 @@
-package com.akvelon.facebook.dto;
+package com.akvelon.facebook.dto.websocket;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserDto {
+public class WebsocketUserDto {
     private Long id;
     private String firstName;
     private String lastName;

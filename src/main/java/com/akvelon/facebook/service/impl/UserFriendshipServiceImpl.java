@@ -1,8 +1,8 @@
 package com.akvelon.facebook.service.impl;
 
 
-import com.akvelon.facebook.dto.FriendshipRequestAction;
-import com.akvelon.facebook.dto.UserDto;
+import com.akvelon.facebook.dto.websocket.FriendshipRequestActionDto;
+import com.akvelon.facebook.dto.websocket.WebsocketUserDto;
 import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.entity.UserFriendship;
 import com.akvelon.facebook.repository.UserFriendshipRepository;
@@ -24,14 +24,14 @@ public class UserFriendshipServiceImpl implements UserFriendshipService {
     private final UserService userService;
 
     @Override
-    public List<UserDto> getActiveFriendshipRequests(Long userId) {
+    public List<WebsocketUserDto> getActiveFriendshipRequests(Long userId) {
         return userFriendshipRepository.getUserAllByToUserIdAndAction(userId,WAITING.getDescription()).stream()
                 .map(this::mapUserToUserDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDto createRequestForFriendship(Long userId, Long friendId) {
+    public WebsocketUserDto createRequestForFriendship(Long userId, Long friendId) {
         if (!userFriendshipRepository.existsByFromUserIdAndToUserId(userId, friendId)) {
             userFriendshipRepository.save(UserFriendship.builder()
                     .fromUserId(userId)
@@ -45,18 +45,18 @@ public class UserFriendshipServiceImpl implements UserFriendshipService {
     }
 
     @Override
-    public void actionWithFriendshipRequest(FriendshipRequestAction friendshipRequestAction) {
+    public void actionWithFriendshipRequest(FriendshipRequestActionDto friendshipRequestActionDto) {
         UserFriendship userFriendship = userFriendshipRepository.getByFromUserIdAndToUserId(
-                        friendshipRequestAction.getRequestFromUserId(),
-                        friendshipRequestAction.getRequestToUserId())
+                        friendshipRequestActionDto.getRequestFromUserId(),
+                        friendshipRequestActionDto.getRequestToUserId())
                 .orElseThrow(RuntimeException::new);
-        userFriendship.setAction(friendshipRequestAction.getAction().getDescription());
+        userFriendship.setAction(friendshipRequestActionDto.getAction().getDescription());
         userFriendship.setActionDate(LocalDateTime.now());
         userFriendshipRepository.save(userFriendship);
     }
 
-    private UserDto mapUserToUserDto(User user) {
-        return UserDto.builder()
+    private WebsocketUserDto mapUserToUserDto(User user) {
+        return WebsocketUserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
