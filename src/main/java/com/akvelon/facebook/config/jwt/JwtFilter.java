@@ -21,9 +21,7 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class JwtFilter extends GenericFilterBean {
-
     public static final String AUTHORIZATION = "Authorization";
-
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -35,16 +33,15 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
-
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateToken(token)) {
             String userLogin = jwtProvider.getLoginFromToken(token);
             CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails,null,customUserDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }

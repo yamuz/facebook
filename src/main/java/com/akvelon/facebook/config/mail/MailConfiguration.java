@@ -50,11 +50,12 @@ public class MailConfiguration {
         @Autowired
         private AuthService service;
 
+        @Autowired
+        private EmailService emailService;
+
         @Value("${mail.from}")
         private String mailFrom;
 
-        @Autowired
-        private EmailService emailService;
 
         @Override
         public void onApplicationEvent(OnRegistrationCompleteEvent event) {

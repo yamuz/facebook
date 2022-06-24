@@ -12,5 +12,4 @@ public class RegistrationDto {
     private String lastName;
     private String phone;
     private String address;
-
 }

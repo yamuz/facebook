@@ -23,7 +23,8 @@ public class RestExceptionConfig {
                 .map(ResponseStatus::value)
                 .orElse(HttpStatus.INTERNAL_SERVER_ERROR);
 
-        ExceptionResponse error = ExceptionResponse.of(httpStatus.value(), e.getMessageCode(), e.getSysMessage(), request.getRequestURI());
+        ExceptionResponse error = ExceptionResponse.of(httpStatus.value(), e.getMessageCode(), e.getSysMessage(),
+                request.getRequestURI());
 
         return new ResponseEntity<>(error, httpStatus);
     }
