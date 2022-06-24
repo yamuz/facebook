@@ -24,6 +24,14 @@ public class UserController {
                 .build();
     }
 
+    @PostMapping("/update/{userId}")
+    public ResponseEntity<UserPage> updateAccount(@RequestBody UserDto userDto){
+
+        userService.update(userDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .build();
+    }
+
     @GetMapping("/all")
     public ResponseEntity<UserPage> getAccounts(){
         return ResponseEntity

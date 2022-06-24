@@ -54,12 +54,6 @@ public class AuthServiceImpl implements AuthService {
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newUser, Locale.ENGLISH, urlPath));
 
         return new JwtAuthenticationResponse("account activation link was sent to email");
-
-        /*return Optional.ofNullable(registrationDto.getEmail())
-                .filter(it -> !userService.existsByEmail(it)) //dto.getEmail()))
-                //.map(it -> mapToUser(registrationDto))
-                .map(it -> new JwtAuthenticationResponse(jwtProvider.generateToken(it.getEmail())))
-                .orElseThrow(()->new EntityNotFoundException("User exist"));*/
     }
 
     @Override

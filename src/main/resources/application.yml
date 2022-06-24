@@ -9,6 +9,7 @@ spring:
     generate-ddl: true
   main:
     banner-mode: off
+    allow-circular-references: true
   mail:
     host: smtp.mail.ru
     port: 465
