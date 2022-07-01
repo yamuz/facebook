@@ -24,7 +24,8 @@ spring:
 app:
   host: http://localhost:8080
   jwtSecret: jwtToken
-  jwtTokenDurationDays: 15
+  jwtDurationDaysAccess: 1
+  jwtDurationDaysRefresh: 60
 mail:
   debug: true
   from: yamuz@mail.ru

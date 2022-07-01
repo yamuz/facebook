@@ -1,4 +1,4 @@
-package com.akvelon.facebook.config;
+package com.akvelon.facebook.exception;
 
 import com.akvelon.facebook.exception.ExceptionResponse;
 import com.akvelon.facebook.exception.RestException;

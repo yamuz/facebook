@@ -1,38 +1,35 @@
-package com.akvelon.facebook.config.user;
+package com.akvelon.facebook.security.details;
 
 import com.akvelon.facebook.entity.User;
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @Builder
-public class CustomUserDetails implements UserDetails {
+@RequiredArgsConstructor
+public class UserDetailsImpl implements UserDetails {
 
-    private String email;
-    private String password;
-    private Collection<? extends GrantedAuthority> grantedAuthorities;
-
-    public static CustomUserDetails fromUserEntityCustomUserDetails(User user) {
-        return CustomUserDetails.builder()
-                .email( user.getEmail())
-                .password(user.getPassword()).build();
-    }
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
-    public String getUsername() {
-        return email;
+    public String getUsername()
+    {
+        return user.getEmail();
     }
 
     @Override
@@ -42,7 +39,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isNonBanned();
     }
 
     @Override
@@ -52,6 +49,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isConfirmed();
     }
 }

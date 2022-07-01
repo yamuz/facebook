@@ -1,4 +1,4 @@
-package com.akvelon.facebook.config.mail;
+package com.akvelon.facebook.mail.config;
 
 import com.akvelon.facebook.dto.mail.Mail;
 import com.akvelon.facebook.entity.User;
@@ -46,7 +46,7 @@ public class MailConfiguration {
     }
 
     @Component
-    public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
+    public static class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
         @Autowired
         private AuthService service;
 
@@ -68,7 +68,7 @@ public class MailConfiguration {
 
             service.createVerificationToken(user,token);
 
-            String confirmationUrl = event.getAppUrl() + "/registrationConfirm?token=" + token;
+            String confirmationUrl = event.getAppUrl() + "/api/registrationConfirm?token=" + token;
             Mail mail = Mail.builder()
                     .mailFrom(mailFrom)
                     .mailTo(user.getEmail())

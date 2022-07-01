@@ -1,6 +1,6 @@
 package com.akvelon.facebook.controller.rest;
 
-import com.akvelon.facebook.config.jwt.JwtAuthenticationResponse;
+import com.akvelon.facebook.security.jwt.JwtAuthenticationResponse;
 import com.akvelon.facebook.dto.auth.LoginDto;
 import com.akvelon.facebook.dto.auth.RegistrationDto;
 import com.akvelon.facebook.service.interfaces.AuthService;
@@ -15,30 +15,26 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
-@Component
 public class AuthController {
     private final AuthService authService;
+    private final String appHost;
 
-    @Value("${app.host}")
-    private final String appHost;// = "http://localhost:8080";
+    public AuthController(AuthService authService, @Value("${app.host}") String appHost) {
+        this.authService = authService;
+        this.appHost = appHost;
+    }
 
     //@ApiOperation(value = "Регистрация пользователя", notes = "Регистрация пользователя")
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public ResponseEntity<JwtAuthenticationResponse> registerUser(@RequestBody @Valid RegistrationDto registrationRequest) {
         return ResponseEntity.ok(authService.registration(registrationRequest, appHost));
     }
 
-    //@ApiOperation(value = "Вход пользователя", notes = "Вход пользователя")
-    @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> loginUser(@RequestBody @Valid LoginDto loginDto){
-        return ResponseEntity.ok(authService.login(loginDto));
-    }
 
-    @GetMapping("/registrationConfirm")
+    @GetMapping("/api/registrationConfirm")
     public ResponseEntity<Map<String,String>> confirmRegistration(@RequestParam("token") String token){
         authService.confirmRegistration(token);
-        return ResponseEntity.ok(Map.of("response", "Registration complete. Use /login path to login."));
+        return ResponseEntity.ok(Map.of("response", "Registration complete. Use /auth/login path to get tokens."));
     }
 }

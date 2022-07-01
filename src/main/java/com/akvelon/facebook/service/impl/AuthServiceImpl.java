@@ -1,7 +1,7 @@
 package com.akvelon.facebook.service.impl;
 
-import com.akvelon.facebook.config.jwt.JwtAuthenticationResponse;
-import com.akvelon.facebook.config.jwt.JwtProvider;
+import com.akvelon.facebook.security.jwt.JwtAuthenticationResponse;
+import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import com.akvelon.facebook.dto.UserDto;
 import com.akvelon.facebook.dto.auth.LoginDto;
 import com.akvelon.facebook.dto.auth.RegistrationDto;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class AuthServiceImpl implements AuthService {
     private final ApplicationEventPublisher eventPublisher;
     private final UserService userService;
-    private final JwtProvider jwtProvider;
+    private final JwtProviderImpl jwtProviderImpl;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository verificationTokenRepository;
 
@@ -54,15 +54,6 @@ public class AuthServiceImpl implements AuthService {
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newUser, Locale.ENGLISH, urlPath));
 
         return new JwtAuthenticationResponse("account activation link was sent to email");
-    }
-
-    @Override
-    public JwtAuthenticationResponse login(LoginDto dto) {
-        User user = userService.findByEmail(dto.getEmail());
-        return Optional.ofNullable(dto.getPassword())
-                .filter(it -> passwordEncoder.matches(dto.getPassword(), user.getPassword()))
-                .map(it -> new JwtAuthenticationResponse(jwtProvider.generateToken(user.getEmail())))
-                .orElseThrow(() -> new EntityNotFoundException("Password wrong"));
     }
 
     @Override

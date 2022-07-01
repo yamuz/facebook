@@ -16,7 +16,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    public enum State {
+        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
+    }
 
+    public enum Role {
+        USER, ADMIN
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,8 +58,23 @@ public class User {
                 .address(userDto.getAddress())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
+                .role(Role.USER)
+                .state(State.NOT_CONFIRMED)
                 .build();
     }
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private  State state;
+
+    public boolean isNonBanned() {
+        return !this.state.equals(State.BANNED);
+    }
+
+    public boolean isConfirmed() {
+        return this.state.equals(State.CONFIRMED);
+    }
 }
 

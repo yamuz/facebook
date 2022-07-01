@@ -1,4 +1,4 @@
-package com.akvelon.facebook.config.jwt;
+package com.akvelon.facebook.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,0 +1,64 @@
+package com.akvelon.facebook.security.jwt;
+
+import com.akvelon.facebook.security.config.SecurityConfig;
+import com.akvelon.facebook.security.providers.JwtProviderImpl;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.lang.Strings;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.GenericFilterBean;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+
+@Slf4j
+@Component
+@AllArgsConstructor
+public class JwtTokenProcessingFilter extends GenericFilterBean {
+    public static final String AUTHORIZATION = "Authorization";
+    public static final String AUTHENTICATION_URL = "api/login";
+    private final JwtProviderImpl jwtProviderImpl;
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+        String bearer = request.getHeader(AUTHORIZATION);
+        if (Strings.hasText(bearer) && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        if (Arrays.stream(SecurityConfig.AUTH_WHITELIST).anyMatch(s-> s.equals(request.getRequestURI()))) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+
+            String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+            try {
+                ParsedToken parsedToken = jwtProviderImpl.getParsedToken(token);
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(parsedToken.getEmail(), null,
+                                Collections.singleton(new SimpleGrantedAuthority(parsedToken.getRole())));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                filterChain.doFilter(servletRequest, servletResponse);
+            } catch (JwtException e){
+                log.error(e.toString());
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
+        }
+    }
+}
