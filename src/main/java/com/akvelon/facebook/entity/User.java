@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -22,6 +23,21 @@ public class User {
 
     public enum Role {
         USER, ADMIN
+    }
+
+    public static User from(UserDto userDto){
+        return User.builder()
+                .id(userDto.getId())
+                .isactive(userDto.getIsactive())
+                .lastName(userDto.getLastName())
+                .firstName(userDto.getFirstName())
+                .phone(userDto.getPhone())
+                .address(userDto.getAddress())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .role(Role.USER)
+                .state(State.NOT_CONFIRMED)
+                .build();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,20 +64,7 @@ public class User {
     @Column(name = "isactive")
     private Boolean isactive;
 
-    public static User from(UserDto userDto){
-        return User.builder()
-                .id(userDto.getId())
-                .isactive(userDto.getIsactive())
-                .lastName(userDto.getLastName())
-                .firstName(userDto.getFirstName())
-                .phone(userDto.getPhone())
-                .address(userDto.getAddress())
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .role(Role.USER)
-                .state(State.NOT_CONFIRMED)
-                .build();
-    }
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -76,5 +79,8 @@ public class User {
     public boolean isConfirmed() {
         return this.state.equals(State.CONFIRMED);
     }
+
+    @ManyToMany
+    private List<UserGroup> userGroupList;
 }
 
