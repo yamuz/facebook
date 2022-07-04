@@ -3,10 +3,7 @@ package com.akvelon.facebook.security.jwt;
 import com.akvelon.facebook.security.authentication.RefreshTokenAuthentication;
 import com.akvelon.facebook.security.details.UserDetailsImpl;
 import com.akvelon.facebook.security.providers.JwtProvider;
-import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -80,7 +77,7 @@ public class EmailPasswordJwtAuthenticationFilter  extends UsernamePasswordAuthe
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
+                                              AuthenticationException failed) throws IOException {
        response.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
 }
