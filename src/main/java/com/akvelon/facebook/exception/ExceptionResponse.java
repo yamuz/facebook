@@ -1,5 +1,6 @@
 package com.akvelon.facebook.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExceptionResponse {
     private final LocalDateTime timestamp;
     private final Integer status;

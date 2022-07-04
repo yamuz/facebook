@@ -1,15 +1,13 @@
 package com.akvelon.facebook.service.impl;
 
-import com.akvelon.facebook.security.jwt.JwtAuthenticationResponse;
-import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import com.akvelon.facebook.dto.UserDto;
-import com.akvelon.facebook.dto.auth.LoginDto;
 import com.akvelon.facebook.dto.auth.RegistrationDto;
 import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.entity.VerificationToken;
 import com.akvelon.facebook.exception.EntityNotFoundException;
 import com.akvelon.facebook.mail.OnRegistrationCompleteEvent;
 import com.akvelon.facebook.repository.VerificationTokenRepository;
+import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import com.akvelon.facebook.service.interfaces.AuthService;
 import com.akvelon.facebook.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
@@ -18,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final VerificationTokenRepository verificationTokenRepository;
 
     private User mapToUser(RegistrationDto dto) {
-        User user = User.builder()
+        return User.builder()
                         .firstName(dto.getFirstName())
                         .lastName(dto.getLastName())
                         .email(dto.getEmail())
@@ -38,11 +35,10 @@ public class AuthServiceImpl implements AuthService {
                         .phone(dto.getPhone())
                         .password(passwordEncoder.encode(dto.getPassword()))
                         .build();
-        return user;
     }
 
     @Override
-    public JwtAuthenticationResponse registration(RegistrationDto registrationDto, String urlPath) {
+    public void registration(RegistrationDto registrationDto, String urlPath) {
         if (userService.existsByEmail(registrationDto.getEmail())){
             throw new EntityNotFoundException("User already exists");
         }
@@ -52,8 +48,6 @@ public class AuthServiceImpl implements AuthService {
         newUser.setId(userDto.getId());
 
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newUser, Locale.ENGLISH, urlPath));
-
-        return new JwtAuthenticationResponse("account activation link was sent to email");
     }
 
     @Override

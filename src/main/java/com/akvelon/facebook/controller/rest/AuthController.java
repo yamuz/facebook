@@ -1,22 +1,22 @@
 package com.akvelon.facebook.controller.rest;
 
-import com.akvelon.facebook.security.jwt.JwtAuthenticationResponse;
-import com.akvelon.facebook.dto.auth.LoginDto;
+import com.akvelon.facebook.controller.api.AuthApi;
 import com.akvelon.facebook.dto.auth.RegistrationDto;
 import com.akvelon.facebook.service.interfaces.AuthService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
 @PropertySource("classpath:application.yml")
-public class AuthController {
+public class AuthController implements AuthApi {
     private final AuthService authService;
     private final String appHost;
 
@@ -25,10 +25,10 @@ public class AuthController {
         this.appHost = appHost;
     }
 
-    //@ApiOperation(value = "Регистрация пользователя", notes = "Регистрация пользователя")
     @PostMapping("/api/register")
-    public ResponseEntity<JwtAuthenticationResponse> registerUser(@RequestBody @Valid RegistrationDto registrationRequest) {
-        return ResponseEntity.ok(authService.registration(registrationRequest, appHost));
+    public ResponseEntity<Map<String,String>> registerUser( @Valid RegistrationDto registrationDto) {
+        authService.registration(registrationDto, appHost);
+        return ResponseEntity.ok(Map.of("response", "account activation link was sent to email"));
     }
 
 

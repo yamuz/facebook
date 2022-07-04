@@ -4,19 +4,25 @@ import com.akvelon.facebook.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 @Data
 @Builder
 public class UserDto {
     private Long id;
+    @Size(min = 1, max = 30)
     private String firstName;
+    @Size(min = 1, max = 30)
     private String lastName;
+    @NotEmpty
     private String email;
     private String address;
     private String phone;
     private String password;
     private Boolean isactive;
 
-    public static UserDto from(User user){
+    public static UserDto from(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

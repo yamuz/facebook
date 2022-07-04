@@ -36,7 +36,9 @@ mail:
     ssl.protocols: TLSv1.2
     ssl.enable: true
     ssl.trust: smtp.mail.ru
-
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
 #spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
 #spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
 #spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql

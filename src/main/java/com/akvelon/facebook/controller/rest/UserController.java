@@ -1,5 +1,6 @@
 package com.akvelon.facebook.controller.rest;
 
+import com.akvelon.facebook.controller.api.UserApi;
 import com.akvelon.facebook.dto.UserDto;
 import com.akvelon.facebook.dto.UserPage;
 import com.akvelon.facebook.service.interfaces.UserService;
@@ -8,16 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserApi {
     private final UserService userService;
 
     @PostMapping("/save")
-    public ResponseEntity<UserPage> saveAccount(@RequestBody UserDto userDto){
+    public ResponseEntity<UserPage> saveAccount(@RequestBody @Valid UserDto userDto){
 
         userService.save(userDto);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/update/{userId}")
-    public ResponseEntity<UserPage> updateAccount(@RequestBody UserDto userDto){
+    public ResponseEntity<UserPage> updateAccount(@RequestBody @Valid UserDto userDto){
 
         userService.update(userDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED)

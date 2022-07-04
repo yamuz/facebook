@@ -5,15 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
 public class Mail {
-	private String mailFrom;
+    @NotEmpty
+    private String mailFrom;
+    @NotEmpty
     private String mailTo;
     private String mailSubject;
+    @NotEmpty
     private String mailContent;
     private String contentType = "text/plain";
-    //private List <Object> attachments;
+
 }
