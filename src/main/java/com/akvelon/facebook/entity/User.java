@@ -2,6 +2,7 @@ package com.akvelon.facebook.entity;
 
 
 import com.akvelon.facebook.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,16 +17,13 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(value= {"userGroupList"})
 public class User {
-    public enum State {
-        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
-    }
+    public enum State {NOT_CONFIRMED, CONFIRMED, DELETED, BANNED}
 
-    public enum Role {
-        USER, ADMIN
-    }
+    public enum Role {USER, ADMIN}
 
-    public static User from(UserDto userDto){
+    public static User from(UserDto userDto) {
         return User.builder()
                 .id(userDto.getId())
                 .isactive(userDto.getIsactive())
@@ -39,6 +37,7 @@ public class User {
                 .state(State.NOT_CONFIRMED)
                 .build();
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -64,13 +63,11 @@ public class User {
     @Column(name = "isactive")
     private Boolean isactive;
 
-
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    private  State state;
+    private State state;
 
     public boolean isNonBanned() {
         return !this.state.equals(State.BANNED);
@@ -81,6 +78,9 @@ public class User {
     }
 
     @ManyToMany
+    @JoinTable(name = "users_groups",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
     private List<UserGroup> userGroupList;
 }
 

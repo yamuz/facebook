@@ -21,7 +21,7 @@ public class UserGroupController implements UserGroupApi {
 
     @Override
     @PostMapping("/save")
-    public ResponseEntity<UserGroupPage> saveUserGroup(@Valid UserGroupDto userGroupDto) {
+    public ResponseEntity<UserGroupPage> saveUserGroup(@RequestBody UserGroupDto userGroupDto) {
         return ResponseEntity.ok(UserGroupPage
                 .builder()
                 .groupDto(List.of(userGroupService.save(userGroupDto)))
@@ -30,7 +30,7 @@ public class UserGroupController implements UserGroupApi {
 
     @Override
     @PostMapping("/update")
-    public ResponseEntity<UserGroupPage> updateAccount(@Valid UserGroupDto userGroupDto) {
+    public ResponseEntity<UserGroupPage> updateUserGroup(@Valid UserGroupDto userGroupDto) {
         return ResponseEntity.ok(UserGroupPage
                 .builder()
                 .groupDto(List.of(userGroupService.update(userGroupDto)))
@@ -52,6 +52,15 @@ public class UserGroupController implements UserGroupApi {
         return ResponseEntity.ok(UserGroupPage
                 .builder()
                 .groupDto(List.of(userGroupService.findById(userGroupId)))
+                .build());
+    }
+
+    @Override
+    @PostMapping("/{userGroupId}/add_user/{userId}")
+    public ResponseEntity<UserGroupPage> addUserToUserGroup(Long userId, Long userGroupId) {
+        return ResponseEntity.ok(UserGroupPage
+                .builder()
+                .groupDto(List.of(userGroupService.addUserToUserGroup(userGroupId, userId)))
                 .build());
     }
 }

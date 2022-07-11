@@ -1,10 +1,9 @@
 package com.akvelon.facebook.entity;
 
 import com.akvelon.facebook.dto.UserGroupDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.akvelon.facebook.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,26 +12,29 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
+@JsonIgnoreProperties(value= {"activeUsers"})
 public class UserGroup {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "owner_id", referencedColumnName = "id")
     private User owner;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "userGroupList",targetEntity = User.class, fetch = FetchType.EAGER)
     private List<User> activeUsers;
 
     private boolean isActive;
 
     public static UserGroup from(UserGroupDto userGroupDto){
         return UserGroup.builder()
-                .isActive(userGroupDto.isActive())
+                .id(userGroupDto.getId())
+                .isActive(userGroupDto.getIsActive())
                 .name(userGroupDto.getName())
                 .activeUsers(userGroupDto.getActiveUsers())
                 .build();

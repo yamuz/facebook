@@ -7,6 +7,14 @@ spring:
   jpa:
     database: postgresql
     generate-ddl: true
+    open-in-view: false
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            action: create
+            create-target: create.sql
   main:
     banner-mode: off
     allow-circular-references: true

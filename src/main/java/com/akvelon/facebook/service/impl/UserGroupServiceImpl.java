@@ -1,6 +1,7 @@
 package com.akvelon.facebook.service.impl;
 
 import com.akvelon.facebook.dto.UserGroupDto;
+import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.entity.UserGroup;
 import com.akvelon.facebook.exception.EntityNotFoundException;
 import com.akvelon.facebook.repository.UserGroupRepository;
@@ -9,6 +10,7 @@ import com.akvelon.facebook.service.interfaces.UserGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,25 +24,25 @@ public class UserGroupServiceImpl implements UserGroupService {
     @Override
     public UserGroupDto findById(Long userGroupId) {
         return UserGroupDto.from(userGroupRepository.findById(userGroupId)
-                .orElseThrow(()-> new EntityNotFoundException("group is not found by id")));
+                .orElseThrow(() -> new EntityNotFoundException("group is not found by id")));
     }
 
     @Override
     public List<UserGroupDto> findAll() {
-        return userGroupRepository.findAll().stream().map(group-> UserGroupDto.from(group)).collect(Collectors.toList());
+        return userGroupRepository.findAll().stream().map(group -> UserGroupDto.from(group)).collect(Collectors.toList());
     }
 
     @Override
     public UserGroupDto findByName(String userGroupName) {
         return UserGroupDto.from(userGroupRepository.findByName(userGroupName)
-                .orElseThrow(()-> new EntityNotFoundException("group is not found by name")));
+                .orElseThrow(() -> new EntityNotFoundException("group is not found by name")));
     }
 
     @Override
     public UserGroupDto save(UserGroupDto userGroupDto) {
         UserGroup userGroup = UserGroup.from(userGroupDto);
-        userGroup.setOwner(userRepository.findById(userGroupDto.getOwner_id())
-                .orElseThrow(()-> new EntityNotFoundException("the owner of group is not found by id")));
+        userGroup.setOwner(userRepository.findById(userGroupDto.getOwnerId())
+                .orElseThrow(() -> new EntityNotFoundException("the owner of group is not found by id")));
 
         UserGroup userGroupSaved = userGroupRepository.save(userGroup);
         userGroupDto.setId(userGroupSaved.getId());
@@ -57,14 +59,42 @@ public class UserGroupServiceImpl implements UserGroupService {
     public UserGroupDto update(UserGroupDto userGroupDto) {
 
         if (!userGroupRepository.existsById(userGroupDto.getId())) {
-                throw  new EntityNotFoundException("group is not found by id");
+            throw new EntityNotFoundException("group is not found by id");
         }
+        UserGroup userGroup = userGroupRepository.findById(userGroupDto.getId()).get();
 
-        UserGroup userGroup = UserGroup.from(userGroupDto);
-        userGroup.setOwner(userRepository.findById(userGroupDto.getOwner_id())
-                .orElseThrow(()-> new EntityNotFoundException("the owner of group is not found by id")));
+        userGroup.setName(userGroupDto.getName());
+        if (userGroupDto.getOwnerId() != null && !userGroupDto.getOwnerId().equals(userGroup.getOwner().getId())) {
+            userGroup.setOwner(userRepository.findById(userGroupDto.getOwnerId())
+                    .orElseThrow(() -> new EntityNotFoundException("the owner of group is not found by id")));
+        }
+        if (userGroupDto.getIsActive() != userGroup.isActive()) {
+            userGroup.setActive(userGroupDto.getIsActive());
+        }
 
         UserGroup userGroupSaved = userGroupRepository.save(userGroup);
         return UserGroupDto.from(userGroupSaved);
     }
+
+    @Transactional
+    @Override
+    public UserGroupDto addUserToUserGroup(Long userGroupId, Long userId) {
+        if (!userGroupRepository.existsById(userGroupId)) {
+            throw new EntityNotFoundException("user group is not found by id");
+        }
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("user is not found by id");
+        }
+
+        User user = userRepository.findById(userId).get();
+        UserGroup userGroup = userGroupRepository.findById(userGroupId).get();
+        user.getUserGroupList().add(userGroup);
+
+        userGroup.getActiveUsers().add(user);
+        userGroupRepository.save(userGroup);
+        userRepository.save(user);
+
+        return UserGroupDto.from(userGroup);
+    }
+
 }

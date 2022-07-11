@@ -19,4 +19,6 @@ public interface UserGroupService {
     boolean existsByName(String groupName);
 
     UserGroupDto update(UserGroupDto userGroupDto);
+
+    UserGroupDto addUserToUserGroup(Long userGroupId, Long userId);
 }

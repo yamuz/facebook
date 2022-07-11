@@ -48,7 +48,8 @@ public class SecurityConfig {
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
-        httpSecurity.authorizeRequests().antMatchers("/api/users/**").authenticated();
+        httpSecurity.authorizeRequests().anyRequest().authenticated();
+        //httpSecurity.authorizeRequests().anyRequest()antMatchers("/api/users/**").authenticated();
 
         httpSecurity.addFilter(emailPasswordJwtAuthenticationFilter);
         httpSecurity.addFilterBefore(jwtTokenProcessingFilter, UsernamePasswordAuthenticationFilter.class);

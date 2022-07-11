@@ -17,14 +17,7 @@ Content-Type: application/x-www-form-urlencoded
 email=yamuuzz@gmail.com&password=123
 
 
-###
-POST http://localhost:8080/auth/login
-Content-Type: application/json
 
-{
-  "email":"yamuuzz@gmail.com",
-  "password":"123"
-}
 ###
 GET http://localhost:8080/api/registrationConfirm
 Content-Type: application/x-www-form-urlencoded
@@ -71,4 +64,27 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11dXp6QGdtYWlsLmNvbSIsI
   "email": "yamuuzz@gmail.com",
   "password":"1234567890",
   "address": "Istanbul, TR"
+}
+
+
+###
+POST http://localhost:8080/api/usergroups/1/add_user/15
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+GET http://localhost:8080/api/usergroups/1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+POST http://localhost:8080/api/usergroups/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+{
+  "id": 2,
+  "name" :"Spring framework community Almaty" ,
+  "isActive": true,
+  "ownerId": 14
 }
