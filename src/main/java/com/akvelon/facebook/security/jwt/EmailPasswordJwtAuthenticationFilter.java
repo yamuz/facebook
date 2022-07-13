@@ -1,5 +1,6 @@
 package com.akvelon.facebook.security.jwt;
 
+import com.akvelon.facebook.AppConstants;
 import com.akvelon.facebook.security.authentication.RefreshTokenAuthentication;
 import com.akvelon.facebook.security.details.UserDetailsImpl;
 import com.akvelon.facebook.security.providers.JwtProvider;
@@ -23,20 +24,13 @@ public class EmailPasswordJwtAuthenticationFilter  extends UsernamePasswordAuthe
     private final ObjectMapper objectMapper;
     private final JwtProvider jwtProviderImpl;
 
-    private static final String USERNAME_PARAMETER = "email";
-    public static final String AUTHENTICATION_URL = "/auth/login";
-
-    private static final String AUTHORIZATION_HEADER_NAME = "AUTHORIZATION";
-
-    private static final String BEARER = "Bearer ";
-
     public EmailPasswordJwtAuthenticationFilter(AuthenticationConfiguration authenticationConfiguration,
                                                 ObjectMapper objectMapper,
                                                 JwtProvider jwtProviderImpl) throws Exception {
         super(authenticationConfiguration.getAuthenticationManager());
 
-        this.setUsernameParameter(USERNAME_PARAMETER);
-        this.setFilterProcessesUrl(AUTHENTICATION_URL);
+        this.setUsernameParameter(AppConstants.USERNAME_PARAMETER);
+        this.setFilterProcessesUrl(AppConstants.AUTHENTICATION_URL);
         this.objectMapper = objectMapper;
         this.jwtProviderImpl = jwtProviderImpl;
     }
@@ -53,13 +47,13 @@ public class EmailPasswordJwtAuthenticationFilter  extends UsernamePasswordAuthe
     }
 
     public boolean hasAuthorizationToken(HttpServletRequest request) {
-        String header = request.getHeader(AUTHORIZATION_HEADER_NAME);
-        return header != null && header.startsWith(BEARER);
+        String header = request.getHeader(AppConstants.AUTHORIZATION_HEADER_NAME);
+        return header != null && header.startsWith(AppConstants.BEARER);
     }
 
     public String getToken(HttpServletRequest request) {
-        String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER_NAME);
-        return authorizationHeader.substring(BEARER.length());
+        String authorizationHeader = request.getHeader(AppConstants.AUTHORIZATION_HEADER_NAME);
+        return authorizationHeader.substring(AppConstants.BEARER.length());
     }
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,

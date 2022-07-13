@@ -29,6 +29,9 @@ spring:
          timeout: 5000
          writetimeout: 5000
          startssl.enable: false
+  redis:
+    host: localhost
+    port: 6380
 app:
   host: http://localhost:8080
   jwtSecret: jwtToken
