@@ -27,6 +27,8 @@ public class PostController implements PostsApi {
                                              @RequestParam("post") MultipartFile postText,
                                              @RequestParam("ownerEmail") String ownerEmail) throws IOException {
 
+
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(PostDtoPage
                         .builder()
