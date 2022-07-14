@@ -17,14 +17,18 @@ public class RegistrationDto {
     @Schema(description = "Пароль", minLength = 5, example = "Password123")
     @Size(min = 5, max = 50, message = "registrationDto.password.size")
     private String password;
+
     @Size(min = 2, max = 50)
-    @NotEmpty(message = "{registrationDto.firstName.empty}")
+    @NotEmpty(message = "{firstName.notempty}")
     private String firstName;
+
     @Size(min = 2, max = 50)
-    @NotEmpty(message = "{registrationDto.lastName.empty}")
+    @NotEmpty(message = "{lastName.notempty}")
     private String lastName;
+
     @Size(min = 6, max = 50)
     private String phone;
-    @NotEmpty(message = "{registrationDto.address.empty}")
+
+    @NotEmpty(message = "{address.notempty}")
     private String address;
 }

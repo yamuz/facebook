@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/facebook
+    username: ${SPRING_DATA_SOURCE_USERNAME}
+    password: ${SPRING_DATA_SOURCE_PASSWORD}
+    url: ${SPRING_DATA_SOURCE_URL} #jdbc:postgresql://localhost:5432/facebook
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
@@ -31,7 +31,7 @@ spring:
          startssl.enable: false
   redis:
     host: localhost
-    port: 6380
+    port: 6379
 app:
   host: http://localhost:8080
   jwtSecret: jwtToken

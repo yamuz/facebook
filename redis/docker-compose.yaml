@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+  database:
+    image: postgres
+    container_name: postgres_db
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: facebook
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  redis:
+    image: redis
+    container_name: redis_db
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-volume:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+volumes:
+  redis-volume:
+    external: true
+  pgdata:
+    external: true

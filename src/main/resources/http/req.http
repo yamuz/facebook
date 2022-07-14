@@ -16,6 +16,11 @@ Content-Type: application/x-www-form-urlencoded
 
 email=yamuuzz@gmail.com&password=123
 
+###
+POST http://localhost:8080/auth/token/revoke
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
 
 
 ###
