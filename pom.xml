@@ -100,7 +100,26 @@
                     </excludes>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>app</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <configuration>
+                            <mainClass>com.akvelon.facebook.FacebookApplication</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -110,6 +129,7 @@
                     <target>9</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
