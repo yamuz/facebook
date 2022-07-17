@@ -87,9 +87,18 @@ POST http://localhost:8080/api/usergroups/update
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
 
+
 {
   "id": 2,
   "name" :"Spring framework community Almaty" ,
   "isActive": true,
   "ownerId": 14
 }
+
+
+### POSTS
+POST http://localhost:8080/api/posts/save
+Content-Type: application/multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+mediaStream=&postText=look post works& ownerEmail=yamuuzz@gmail.com

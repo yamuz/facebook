@@ -37,6 +37,8 @@ app:
   jwtSecret: jwtToken
   jwtDurationDaysAccess: 1
   jwtDurationDaysRefresh: 60
+  fileStorage:
+    path: C:\\Users\\Almaz\\Desktop\\Akvelon\\Facebook\\files
 mail:
   debug: true
   from: yamuz@mail.ru
@@ -50,6 +52,7 @@ mail:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
 #spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
 #spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
 #spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
