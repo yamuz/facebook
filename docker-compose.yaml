@@ -1,0 +1,68 @@
+version: '3.3'
+services:
+  application:
+    image: application-image
+    container_name: application
+    networks:
+      - cloud
+    ports:
+      - 80:8080
+    depends_on:
+      - database
+      - redis
+    environment:
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/facebook"
+      - "SPRING_DATASOURCE_USERNAME=postgres"
+      - "SPRING_DATASOURCE_PASSWORD=postgres"
+      - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+  database:
+    image: postgres
+    container_name: postgres_db
+    networks:
+      - cloud
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: facebook
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  redis:
+    image: redis
+    container_name: redis_db
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-volume:/data
+    networks:
+      - cloud
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+volumes:
+  redis-volume:
+    external: true
+  pgdata:
+    external: true
+
+networks:
+  cloud:
+    external: true
+
+
