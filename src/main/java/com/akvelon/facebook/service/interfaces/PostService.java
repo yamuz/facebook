@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostService {
 
-    PostDto save(MultipartFile file, MultipartFile postText, String ownerEmail) throws IOException;
+    PostDto save(MultipartFile file, String postText, String ownerEmail) throws IOException;
 
     List<PostDto> findAll();
 
@@ -19,4 +19,7 @@ public interface PostService {
 
     List<PostDto> findAllByUser(String ownerEmail);
 
+    void deleteById(Long postId);
+
+    List<PostDto> findFriendsPostsByUser(String ownerEmail);
 }

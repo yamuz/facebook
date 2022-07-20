@@ -4,6 +4,7 @@ package com.akvelon.facebook.service.interfaces;
 
 import com.akvelon.facebook.dto.FileDto;
 
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 
@@ -13,5 +14,5 @@ public interface FileService {
 
     void writeFileToStream(String storageFileName, OutputStream outputStream);
 
-    FileDto getFileInformation(String storageFileName);
+    FileDto getFileInformation(String storageFileName) throws FileNotFoundException;
 }

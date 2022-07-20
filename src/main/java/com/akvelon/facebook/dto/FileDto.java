@@ -5,7 +5,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.InputStream;
+import java.io.OutputStream;
 
 
 @Data
@@ -18,8 +18,10 @@ public class FileDto {
     @Max(value = 50000)
     private Integer size;
     @NotEmpty
+    private String storageFileName;
+    @NotEmpty
     private String mimeType;
     private String description;
     @NotNull
-    private InputStream fileStream;
+    private OutputStream fileStream;
 }

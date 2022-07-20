@@ -25,7 +25,7 @@ Content-Type: application/x-www-form-urlencoded
 token=42c21630-6cee-4282-a4cc-3d59f41272f0
 
 ###
-GET http://localhost:8080/users/all
+GET http://localhost:8080/api/users/all
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
 
@@ -77,6 +77,7 @@ GET http://localhost:8080/api/usergroups/1
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
 
+
 ###
 POST http://localhost:8080/api/usergroups/update
 Content-Type: application/json
@@ -91,9 +92,17 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmL
 }
 
 
-### POSTS
-POST http://localhost:8080/api/posts/save
-Content-Type: application/multipart/form-data
+###
+GET http://localhost:8080/upload-avatar
+Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
 
-mediaStream=&postText=look post works& ownerEmail=yamuuzz@gmail.com
+###
+GET http://localhost:8080/api/file/ec53a865-9365-46fc-bb45-0b0c3d4ec2f9
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+GET http://localhost:8080/api/posts/yamuuzz@gmail.com/all
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g

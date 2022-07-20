@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,12 +15,12 @@ public interface PostsApi {
 
     @Operation(summary = "Добавление поста")
     @PostMapping("/save")
-    ResponseEntity<PostDtoPage> save(@RequestParam("mediafile") MultipartFile file,
-                                     @RequestParam("post") MultipartFile postText,
+    ResponseEntity<PostDtoPage> save(@RequestParam("mediaStream") MultipartFile file,
+                                     @RequestParam("post") String postText,
                                      @RequestParam("ownerEmail") String ownerEmail) throws IOException;
 
 
-    @Operation(summary = "получение поста по id")
+    @Operation(summary = "Получение поста по id")
     @GetMapping("/{postId}")
     ResponseEntity<PostDtoPage> getPost(@PathVariable Long postId );
 
@@ -32,4 +29,11 @@ public interface PostsApi {
     @GetMapping("/{ownerEmail}/all")
     ResponseEntity<PostDtoPage> getPostOfUser(@PathVariable String ownerEmail );
 
+    @Operation(summary = "Удаление поста по id")
+    @PostMapping("/delete/{postId}")
+    ResponseEntity<String> deletePost(@PathVariable Long postId);
+
+    @Operation(summary = "Получение постов друзей пользователя")
+    @GetMapping("/{ownerEmail}/friends")
+    ResponseEntity<PostDtoPage> getPostOfFriends(@PathVariable String ownerEmail );
 }

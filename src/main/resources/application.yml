@@ -1,4 +1,7 @@
 spring:
+  servlet:
+      multipart:
+        max-file-size: -1
   datasource:
     username: postgres
     password: postgres
@@ -35,7 +38,7 @@ app:
   jwtDurationDaysAccess: 1
   jwtDurationDaysRefresh: 60
   fileStorage:
-    path: C:\\Users\\Almaz\\Desktop\\Akvelon\\Facebook\\files
+    path: C:\\Users\\Almaz\\Desktop\\Akvelon\\Facebook\\files\\
 mail:
   debug: true
   from: yamuz@mail.ru

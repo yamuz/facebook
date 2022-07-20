@@ -15,23 +15,19 @@ import java.util.Date;
 @Builder
 public class PostDto {
     private Long id;
-    private Date postedDate;
+    private String postedDate;
     private String postText;
-    private byte[] mediaStream;
+    private String fileStorageName;
     private String ownerEmail;
 
     public static PostDto from(Post post) {
-        try{
-            return PostDto.builder()
-                    .id(post.getId())
-                    .postedDate(post.getPostedDate())
-                    .ownerEmail(post.getOwner().getEmail())
-                    .postText(post.getPostText())
-                    .mediaStream(Files.readAllBytes(Path.of(post.getFileInfo().getStorageFileName())))
-                    .build();
-        } catch (IOException exception){
-            throw new RuntimeException(exception.getMessage());
-        }
+        return PostDto.builder()
+                .id(post.getId())
+                .postedDate(post.getPostedDate().toString())
+                .ownerEmail(post.getOwner().getEmail())
+                .postText(post.getPostText())
+                .fileStorageName(post.getFileInfo().getStorageFileName())
+                .build();
     }
 
 }
