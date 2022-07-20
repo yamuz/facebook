@@ -1,13 +1,11 @@
 package com.akvelon.facebook.security.jwt;
 
-import com.akvelon.facebook.AppConstants;
+import com.akvelon.facebook.config.AppConstants;
 import com.akvelon.facebook.repository.BlackListRepository;
 import com.akvelon.facebook.security.providers.JwtProvider;
-import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

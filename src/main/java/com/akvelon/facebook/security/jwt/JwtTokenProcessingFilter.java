@@ -1,11 +1,8 @@
 package com.akvelon.facebook.security.jwt;
 
-import com.akvelon.facebook.AppConstants;
 import com.akvelon.facebook.security.config.SecurityConfig;
 import com.akvelon.facebook.security.providers.JwtProvider;
-import com.akvelon.facebook.security.providers.JwtProviderImpl;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.lang.Strings;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

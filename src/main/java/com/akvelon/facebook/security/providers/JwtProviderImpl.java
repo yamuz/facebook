@@ -1,6 +1,6 @@
 package com.akvelon.facebook.security.providers;
 
-import com.akvelon.facebook.AppConstants;
+import com.akvelon.facebook.config.AppConstants;
 import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.security.details.UserDetailsImpl;
 import com.akvelon.facebook.security.jwt.ParsedToken;

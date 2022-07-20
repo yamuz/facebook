@@ -1,6 +1,6 @@
 package com.akvelon.facebook.security.jwt;
 
-import com.akvelon.facebook.AppConstants;
+import com.akvelon.facebook.config.AppConstants;
 import com.akvelon.facebook.security.authentication.RefreshTokenAuthentication;
 import com.akvelon.facebook.security.details.UserDetailsImpl;
 import com.akvelon.facebook.security.providers.JwtProvider;
@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

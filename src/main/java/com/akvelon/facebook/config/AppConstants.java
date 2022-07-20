@@ -1,4 +1,4 @@
-package com.akvelon.facebook;
+package com.akvelon.facebook.config;
 
 public class AppConstants {
     public static final String REVOKE_TOKEN_URL = "/auth/token/revoke";
