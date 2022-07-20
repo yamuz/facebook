@@ -7,53 +7,5 @@ spring:
   jpa:
     database: postgresql
     generate-ddl: true
-    open-in-view: false
-    properties:
-      javax:
-        persistence:
-          schema-generation:
-            create-source: metadata
-            action: create
-            create-target: create.sql
-  main:
-    banner-mode: off
-    allow-circular-references: true
-  mail:
-    host: smtp.mail.ru
-    port: 465
-    username: yamuz
-    password: RdGakUHndoIPGBBeoKFL
-    properties.mail.smtp:
-         auth: true
-         connectiontimeout: 10000
-         timeout: 5000
-         writetimeout: 5000
-         startssl.enable: false
-  redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
-app:
-  host: http://localhost:8080
-  jwtSecret: jwtToken
-  jwtDurationDaysAccess: 1
-  jwtDurationDaysRefresh: 60
-  fileStorage:
-    path: C:\\Users\\Almaz\\Desktop\\Akvelon\\Facebook\\files
-mail:
-  debug: true
-  from: yamuz@mail.ru
-  transport.protocol: smtp
-  smtp:
-    auth: true
-    starttls.enable: false
-    ssl.protocols: TLSv1.2
-    ssl.enable: true
-    ssl.trust: smtp.mail.ru
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-
-#spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
-#spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
-#spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
-
+  mvc:
+    static-path-pattern: /static/**
