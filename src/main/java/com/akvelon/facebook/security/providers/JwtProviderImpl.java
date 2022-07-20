@@ -1,5 +1,6 @@
 package com.akvelon.facebook.security.providers;
 
+import com.akvelon.facebook.AppConstants;
 import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.security.details.UserDetailsImpl;
 import com.akvelon.facebook.security.jwt.ParsedToken;
@@ -7,6 +8,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.lang.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
@@ -65,7 +68,6 @@ public class JwtProviderImpl implements JwtProvider{
                 .email(claims.getSubject())
                 .role((String) claims.get("role"))
                 .build();
-
     }
 
     @Override
@@ -81,4 +83,14 @@ public class JwtProviderImpl implements JwtProvider{
                 null,
                 Collections.singleton(new SimpleGrantedAuthority(parsedToken.getRole())));
     }
+
+    @Override
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String bearer = request.getHeader(AppConstants.AUTHORIZATION);
+        if (Strings.hasText(bearer) && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
+    }
+
 }

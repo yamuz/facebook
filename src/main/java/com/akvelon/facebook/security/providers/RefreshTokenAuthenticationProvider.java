@@ -1,5 +1,6 @@
 package com.akvelon.facebook.security.providers;
 
+import com.akvelon.facebook.repository.BlackListRepository;
 import com.akvelon.facebook.security.authentication.RefreshTokenAuthentication;
 import com.akvelon.facebook.security.exceptions.RefreshTokenException;
 import io.jsonwebtoken.JwtException;
@@ -18,13 +19,16 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 
     private final JwtProvider jwtProviderImpl;
 
+    private final BlackListRepository blackListRepository;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String)authentication.getCredentials();
+        if (blackListRepository.exists(token)){
+            throw new RefreshTokenException("Token was revoked");
+        }
         try {
             return jwtProviderImpl.buildAuthentication(token);
         } catch (JwtException e) {
-            log.info(e.getMessage());
             throw new RefreshTokenException(e.getMessage(), e);
         }
     }
