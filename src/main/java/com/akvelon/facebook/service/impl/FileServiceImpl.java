@@ -7,6 +7,8 @@ import com.akvelon.facebook.service.interfaces.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 @Service
@@ -27,7 +29,14 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileDto getFileInformation(String storageFileName) {
-        return null;
+    public FileDto getFileInformation(String storageFileName) throws FileNotFoundException {
+        FileInfo fileInfo = filesRepository.findByStorageFileName(storageFileName).orElseThrow();
+        return FileDto.builder()
+                .fileName(fileInfo.getOriginalFileName())
+                .storageFileName(fileInfo.getStorageFileName())
+                .mimeType(fileInfo.getMimeType())
+                .size(fileInfo.getSize().intValue())
+                .fileStream(new FileOutputStream(fileInfo.getStorageFileName()))
+                .build();
     }
 }

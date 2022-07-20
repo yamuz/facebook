@@ -46,33 +46,27 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
-    public PostDto save(MultipartFile file, MultipartFile postTextData, String ownerEmail) throws IOException {
-        InputStream inputStream =  file.getInputStream();
-        String fileName = file.getName();
-        String mimeType = file.getContentType();
-        Long  size = file.getSize();
-
+    public PostDto save(MultipartFile file, String postText, String ownerEmail) throws IOException {
         FileInfo fileInfo = FileInfo.builder()
                 .description("Post mediafile. File owner:" + ownerEmail)
-                .mimeType(mimeType)
-                .size(size)
-                .originalFileName(fileName)
+                .mimeType(file.getContentType())
+                .size(file.getSize())
+                .originalFileName(file.getName())
                 .storageFileName(UUID.randomUUID().toString())
                 .build();
         FileInfo savedFileInfo = filesRepository.save(fileInfo);
 
-        String postText = (new BufferedReader(new InputStreamReader(postTextData.getInputStream()))).readLine();
         Post post = Post.builder()
                 .postedDate(Date.from(Instant.now()))
                 .postText(postText)
                 .owner(userRepository.findByEmail(ownerEmail)
-                        .orElseThrow( ()-> new EntityNotFoundException("user not found by email:" + ownerEmail)))
+                        .orElseThrow(() -> new EntityNotFoundException("user not found by email:" + ownerEmail)))
                 .fileInfo(savedFileInfo)
                 .build();
 
         Post postSaved = postRepository.save(post);
         try {
-            Files.copy(inputStream, Paths.get(storagePath + "\\" + fileInfo.getStorageFileName()));
+            Files.copy(file.getInputStream(), Paths.get(storagePath + fileInfo.getStorageFileName()));
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -87,7 +81,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto findById(Long id) {
         return PostDto.from(postRepository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("post not found by id")));
+                .orElseThrow(() -> new EntityNotFoundException("post not found by id")));
     }
 
     @Override
@@ -97,11 +91,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> findAllByUser(String ownerEmail) {
-        if (userRepository.existsByEmail(ownerEmail)){
-            throw new EntityNotFoundException("User not found, email:" + ownerEmail );
-        }
+        return postRepository.findAllByOwner(userRepository.findByEmail(ownerEmail).orElseThrow(
+                        ()-> new EntityNotFoundException("User not found, email:" + ownerEmail)
+                )).stream().map(PostDto::from).collect(Collectors.toList());
+    }
 
-        return postRepository.findAllByOwner(userRepository.findByEmail(ownerEmail).get())
-                .stream().map(PostDto::from).collect(Collectors.toList());
+    @Override
+    public void deleteById(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
+    @Override
+    public List<PostDto> findFriendsPostsByUser(String ownerEmail) {
+        return postRepository.findFriendsPostsByEmail(ownerEmail).stream()
+                .map(PostDto::from).collect(Collectors.toList());
     }
 }
