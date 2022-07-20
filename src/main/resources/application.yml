@@ -1,6 +1,8 @@
 spring:
-  spring:
-    rabbitmq:
+  servlet:
+    multipart:
+      max-file-size: -1
+  rabbitmq:
       listener:
         simple:
           default-requeue-rejected: false
@@ -44,6 +46,9 @@ app:
   jwtSecret: jwtToken
   jwtDurationDaysAccess: 1
   jwtDurationDaysRefresh: 60
+  fileStorage:
+    path: C:\\Users\\Almaz\\Desktop\\Akvelon\\Facebook\\files\\
+
 mail:
   debug: true
   from: yamuz@mail.ru
