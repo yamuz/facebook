@@ -75,6 +75,8 @@ public class MailConfiguration {
                     .mailSubject("Registration Confirmation")
                     .mailContent(confirmationUrl)
                     .build();
+            //create rabbit producer
+            //send to rabbit
             emailService.sendMail(mail);
         }
     }
