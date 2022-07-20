@@ -4,6 +4,7 @@ import com.akvelon.facebook.dto.UserDto;
 import com.akvelon.facebook.entity.User;
 import com.akvelon.facebook.repository.UserRepository;
 import com.akvelon.facebook.service.interfaces.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -72,4 +73,5 @@ public class UserServiceImpl implements UserService {
         }
         return UserDto.from(userRepository.save(user));
     }
+
 }
