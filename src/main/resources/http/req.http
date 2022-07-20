@@ -1,0 +1,104 @@
+POST http://localhost:8080/api/register
+Content-Type: application/json
+
+{
+    "firstName": "almaz",
+    "lastName": "abdrayev",
+    "email": "yamuz@yandex.ru",
+    "password":"123",
+    "phone": "8798798797",
+    "address": "rtttyy"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+email=yamuuzz@gmail.com&password=123
+
+###
+POST http://localhost:8080/auth/token/revoke
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+
+
+###
+GET http://localhost:8080/api/registrationConfirm
+Content-Type: application/x-www-form-urlencoded
+
+token=42c21630-6cee-4282-a4cc-3d59f41272f0
+
+###
+GET http://localhost:8080/users/all
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+
+
+###
+POST http://localhost:8080/api/email
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11ekBnbWFpbC5ydSIsImV4cCI6MTY1NzIyNzYwMH0.EZbP8E117TNU84TS-PGCuS8OHdo3EkbdJ0J5i6_mEod5xEOFBnNuPlYb42BiBsyIqrLieQToML-PBWhpQNWMiQ
+
+{
+  "email":"yamuz@gmail.ru",
+  "password":"123"
+}
+
+###
+POST http://localhost:8080/api/users/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11dXp6QGdtYWlsLmNvbSIsImV4cCI6MTY1NzMxNDAwMH0.UTf5peL9p4vYgEZFbViQEhYbWfTpxgdwvTgYed2x2wRESsssWDzehFkRAa3eecNVrskBvfNT27JOUsINAkT4zA
+
+{
+  "firstName": "abdrahman",
+  "lastName": "abdrayev",
+  "email": "yamuz@gmail.ru",
+  "password":"123"
+}
+
+###
+POST http://localhost:8080/api/users/update/10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YW11dXp6QGdtYWlsLmNvbSIsImV4cCI6MTY1NzMxNDAwMH0.UTf5peL9p4vYgEZFbViQEhYbWfTpxgdwvTgYed2x2wRESsssWDzehFkRAa3eecNVrskBvfNT27JOUsINAkT4zA
+
+{
+  "firstName": "abdrahman_new",
+  "lastName": "abdrayev_new",
+  "email": "yamuuzz@gmail.com",
+  "password":"1234567890",
+  "address": "Istanbul, TR"
+}
+
+
+###
+POST http://localhost:8080/api/usergroups/1/add_user/15
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+GET http://localhost:8080/api/usergroups/1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+POST http://localhost:8080/api/usergroups/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+
+{
+  "id": 2,
+  "name" :"Spring framework community Almaty" ,
+  "isActive": true,
+  "ownerId": 14
+}
+
+
+### POSTS
+POST http://localhost:8080/api/posts/save
+Content-Type: application/multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+mediaStream=&postText=look post works& ownerEmail=yamuuzz@gmail.com

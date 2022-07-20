@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/facebook
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATA_SOURCE_URL}
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql

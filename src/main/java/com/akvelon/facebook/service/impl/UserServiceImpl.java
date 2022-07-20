@@ -6,6 +6,10 @@ import com.akvelon.facebook.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
