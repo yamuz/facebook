@@ -5,7 +5,6 @@ import com.akvelon.facebook.dto.UserGroupDto;
 import com.akvelon.facebook.dto.UserGroupPage;
 import com.akvelon.facebook.service.interfaces.UserGroupService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

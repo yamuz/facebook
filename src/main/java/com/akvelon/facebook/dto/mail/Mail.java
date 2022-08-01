@@ -12,7 +12,9 @@ import java.io.*;
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Mail {
+public class Mail implements Serializable{
+    private static final long serialVersionUID = 5462223600L;
+
     @NotEmpty
     private String mailFrom;
     @NotEmpty

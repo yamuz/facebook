@@ -2,7 +2,6 @@ package com.akvelon.facebook.security.providers;
 
 import com.akvelon.facebook.security.jwt.ParsedToken;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.lang.Strings;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;

@@ -14,16 +14,19 @@ spring:
   jpa:
     database: postgresql
     generate-ddl: true
-    open-in-view: false
+    open-in-view: true
     properties:
       javax:
         persistence:
           schema-generation:
+            database:
+              action: update
             create-source: metadata
-            action: create
-            create-target: create.sql
-  mvc:
-    static-path-pattern: /static/**
+            scripts:
+              action: update
+              create-target: update.sql
+  #mvc:
+  #  static-path-pattern: /static/**
   main:
     banner-mode: off
     allow-circular-references: true

@@ -1,6 +1,7 @@
 package com.akvelon.facebook;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +17,14 @@ public class FacebookApplication {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper().configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,
-                true);
+        return new ObjectMapper()
+                .configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+                .registerModule( dateTimeModule() );
+    }
+
+    @Bean
+    public JavaTimeModule dateTimeModule() {
+        return new JavaTimeModule();
     }
 
     @Bean

@@ -1,7 +1,5 @@
 package com.akvelon.facebook.entity;
 
-import com.akvelon.facebook.dto.PostDto;
-import com.akvelon.facebook.dto.PostNewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +18,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
@@ -28,8 +26,12 @@ public class Post {
 
     private String postText;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "file_id", referencedColumnName = "id")
     private FileInfo fileInfo;
+
+    @ManyToOne(targetEntity = UserGroup.class)
+    @JoinColumn(name = "user_group_id", referencedColumnName = "id")
+    private UserGroup userGroup;
 
 }

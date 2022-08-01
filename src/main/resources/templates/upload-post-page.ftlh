@@ -27,7 +27,7 @@
         formData.append('postText', postText);
         formData.append('ownerEmail', ownerEmail);
 
-        fetch('/api/posts/save2', {
+        fetch('/api/posts/save', {
             method: 'POST',
             body: formData,
 

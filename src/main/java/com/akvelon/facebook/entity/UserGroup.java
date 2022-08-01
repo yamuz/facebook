@@ -1,12 +1,15 @@
 package com.akvelon.facebook.entity;
 
 import com.akvelon.facebook.dto.UserGroupDto;
-import com.akvelon.facebook.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data

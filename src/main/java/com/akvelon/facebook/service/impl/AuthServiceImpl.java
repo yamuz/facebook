@@ -10,9 +10,8 @@ import com.akvelon.facebook.mq.producers.MQMessageProducer;
 import com.akvelon.facebook.repository.VerificationTokenRepository;
 import com.akvelon.facebook.service.interfaces.AuthService;
 import com.akvelon.facebook.service.interfaces.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,10 +70,7 @@ public class AuthServiceImpl implements AuthService {
                 .mailContent(confirmationUrl)
                 .build();
 
-        //send to rabbit
         mqMessageProducer.sendMessage(mail);
-
-        //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newUser, Locale.ENGLISH, urlPath));
     }
 
     @Override
@@ -96,6 +92,7 @@ public class AuthServiceImpl implements AuthService {
     public void confirmRegistration(String token) {
         User user = Objects.requireNonNull(verificationTokenRepository.findByToken(token)).getUser();
         user.setIsactive(true);
+        user.setState(User.State.CONFIRMED);
         userService.save(UserDto.from(user));
     }
 }

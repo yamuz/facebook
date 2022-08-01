@@ -6,10 +6,7 @@ import com.akvelon.facebook.service.interfaces.AuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -26,7 +23,7 @@ public class AuthController implements AuthApi {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<Map<String,String>> registerUser( @Valid RegistrationDto registrationDto) {
+    public ResponseEntity<Map<String,String>> registerUser( @Valid @RequestBody RegistrationDto registrationDto) {
         authService.registration(registrationDto, appHost);
         return ResponseEntity.ok(Map.of("response", "account activation link was sent to email"));
     }

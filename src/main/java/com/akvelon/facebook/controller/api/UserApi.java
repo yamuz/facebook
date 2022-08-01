@@ -21,7 +21,7 @@ public interface UserApi {
     ResponseEntity<UserPage> saveAccount(@RequestBody @Valid UserDto userDto);
 
     @Operation(summary = "Изменени данных пользователя")
-    @PostMapping("/update/{userId}")
+    @PostMapping("/{userId}/update")
     ResponseEntity<UserPage> updateAccount(@RequestBody @Valid UserDto userDto);
 
     @Operation(summary = "Получение всех пользователей")

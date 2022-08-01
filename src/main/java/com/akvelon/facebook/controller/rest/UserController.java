@@ -26,7 +26,7 @@ public class UserController implements UserApi {
                 .build();
     }
 
-    @PostMapping("/update/{userId}")
+    @PostMapping("/{userId}/update")
     public ResponseEntity<UserPage> updateAccount(@RequestBody @Valid UserDto userDto){
 
         userService.update(userDto);

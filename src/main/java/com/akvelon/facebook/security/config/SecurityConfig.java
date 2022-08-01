@@ -31,7 +31,7 @@ public class SecurityConfig {
             "/swagger-resources",
             "/swagger-resources/**",
             "/swagger-ui.html",
-            "/upload-avatar",  "/file", //"/api/file/**","/api/posts/save2",
+            "/upload-post",  "/ws", "/api/file/**", "/chat.html","/js/chat-websocket.js", "/ws/**",
             "/swagger-ui/**",
             "/v3/api-docs/**"
     };

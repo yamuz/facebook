@@ -4,21 +4,22 @@ import com.akvelon.facebook.dto.PostDto;
 import com.akvelon.facebook.dto.PostNewDto;
 import com.akvelon.facebook.entity.FileInfo;
 import com.akvelon.facebook.entity.Post;
+import com.akvelon.facebook.entity.UserGroup;
 import com.akvelon.facebook.exception.EntityNotFoundException;
 import com.akvelon.facebook.repository.FilesRepository;
 import com.akvelon.facebook.repository.PostRepository;
+import com.akvelon.facebook.repository.UserGroupRepository;
 import com.akvelon.facebook.repository.UserRepository;
 import com.akvelon.facebook.service.interfaces.PostService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -34,16 +35,22 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final FilesRepository filesRepository;
 
+    private final UserGroupRepository userGroupRepository;
+
 
     public PostServiceImpl(PostRepository postRepository, UserRepository userRepository,
-                           FilesRepository filesRepository, @Value("${app.fileStorage.path}") String storagePath) {
+                           FilesRepository filesRepository, @Value("${app.fileStorage.path}") String storagePath,
+                           UserGroupRepository userGroupRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.filesRepository = filesRepository;
         this.storagePath = storagePath;
+        this.userGroupRepository = userGroupRepository;
     }
 
 
+
+    @CachePut(value = "postService", key = "#result.id", unless = "#result == null")
     @Transactional
     @Override
     public PostDto save(MultipartFile file, String postText, String ownerEmail) throws IOException {
@@ -51,7 +58,7 @@ public class PostServiceImpl implements PostService {
                 .description("Post mediafile. File owner:" + ownerEmail)
                 .mimeType(file.getContentType())
                 .size(file.getSize())
-                .originalFileName(file.getName())
+                .originalFileName(file.getOriginalFilename())
                 .storageFileName(UUID.randomUUID().toString())
                 .build();
         FileInfo savedFileInfo = filesRepository.save(fileInfo);
@@ -62,6 +69,37 @@ public class PostServiceImpl implements PostService {
                 .owner(userRepository.findByEmail(ownerEmail)
                         .orElseThrow(() -> new EntityNotFoundException("user not found by email:" + ownerEmail)))
                 .fileInfo(savedFileInfo)
+                .userGroup(null)
+                .build();
+
+        Post postSaved = postRepository.save(post);
+        try {
+            Files.copy(file.getInputStream(), Paths.get(storagePath + fileInfo.getStorageFileName()));
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+        return PostDto.from(postSaved);
+    }
+
+    @Transactional
+    @Override
+    public PostDto saveToGroup(MultipartFile file, String postText, String ownerEmail, Long userGroupId) throws IOException {
+        FileInfo fileInfo = FileInfo.builder()
+                .description("Post mediafile. File owner:" + ownerEmail)
+                .mimeType(file.getContentType())
+                .size(file.getSize())
+                .originalFileName(file.getOriginalFilename())
+                .storageFileName(UUID.randomUUID().toString())
+                .build();
+        FileInfo savedFileInfo = filesRepository.save(fileInfo);
+
+        Post post = Post.builder()
+                .postedDate(Date.from(Instant.now()))
+                .postText(postText)
+                .owner(userRepository.findByEmail(ownerEmail)
+                        .orElseThrow(() -> new EntityNotFoundException("user not found by email:" + ownerEmail)))
+                .fileInfo(savedFileInfo)
+                .userGroup(userGroupRepository.findById(userGroupId).orElseThrow())
                 .build();
 
         Post postSaved = postRepository.save(post);
@@ -78,6 +116,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll().stream().map(PostDto::from).collect(Collectors.toList());
     }
 
+    @Cacheable(value = "postService", key = "#postId")
     @Override
     public PostDto findById(Long id) {
         return PostDto.from(postRepository.findById(id)
@@ -86,6 +125,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto update(PostNewDto postDto) {
+        // TODO implement post update
         return null;
     }
 
@@ -97,6 +137,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @CacheEvict(value = "postsService", key = "#postId")
     public void deleteById(Long postId) {
         postRepository.deleteById(postId);
     }
@@ -105,5 +146,12 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> findFriendsPostsByUser(String ownerEmail) {
         return postRepository.findFriendsPostsByEmail(ownerEmail).stream()
                 .map(PostDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostDto> findPostsByUserGroup(Long userGroupId) {
+        return postRepository.findAllByUserGroupOrderByPostedDateDesc(userGroupRepository.findById(userGroupId)
+                .orElseThrow( ()-> new EntityNotFoundException("User group not found, Id:" + userGroupId)))
+                .stream().map(PostDto::from).collect(Collectors.toList());
     }
 }

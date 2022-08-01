@@ -1,5 +1,6 @@
 package com.akvelon.facebook.controller.rest;
 
+import com.akvelon.facebook.controller.api.FriendshipApi;
 import com.akvelon.facebook.dto.websocket.FriendshipRequestActionDto;
 import com.akvelon.facebook.dto.websocket.WebsocketUserDto;
 import com.akvelon.facebook.service.interfaces.UserFriendshipService;
@@ -12,7 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/friendship")
-public class FriendshipRestController {
+public class FriendshipRestController implements FriendshipApi {
     private final UserFriendshipService userFriendshipService;
 
     @GetMapping(value = "/requests/{user_id}")

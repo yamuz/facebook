@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -19,16 +18,16 @@ public class RegistrationDto {
     private String password;
 
     @Size(min = 2, max = 50)
-    @NotEmpty(message = "{firstName.notempty}")
+    //@NotEmpty(message = "{NotEmpty.registrationDto.firstName}")
     private String firstName;
 
     @Size(min = 2, max = 50)
-    @NotEmpty(message = "{lastName.notempty}")
+    //@NotEmpty(message = "{NotEmpty.registrationDto.lastName}")
     private String lastName;
 
     @Size(min = 6, max = 50)
     private String phone;
 
-    @NotEmpty(message = "{address.notempty}")
+    //@NotEmpty(message = "{NotEmpty.registrationDto.address}")
     private String address;
 }

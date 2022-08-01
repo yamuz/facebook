@@ -1,9 +1,6 @@
 package com.akvelon.facebook.service.interfaces;
 
-import com.akvelon.facebook.dto.UserDto;
 import com.akvelon.facebook.dto.UserGroupDto;
-import com.akvelon.facebook.entity.User;
-import com.akvelon.facebook.entity.UserGroup;
 
 import java.util.List;
 

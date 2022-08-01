@@ -2,12 +2,12 @@ POST http://localhost:8080/api/register
 Content-Type: application/json
 
 {
-    "firstName": "almaz",
-    "lastName": "abdrayev",
-    "email": "yamuz@yandex.ru",
-    "password":"123",
+    "firstName": "rahman",
+    "lastName": "rahman",
+    "email": "rahman.r.01.01.1984@gmail.com",
+    "password": "123456",
     "phone": "8798798797",
-    "address": "rtttyy"
+    "address": "istanbul"
 }
 
 ###
@@ -108,6 +108,25 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
 
 ###
-GET http://localhost:8080/api/posts/yamuuzz@gmail.com/all
+GET http://localhost:8080/api/posts/user/yamuuzz@gmail.com/all
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+
+###
+GET http://localhost:8080/api/posts/user/yamuuzz@gmail.com/friends
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+GET http://localhost:8080/api/posts/user_group/1/all
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
+
+###
+POST http://localhost:8080/api/posts/user/yamuuzz@gmail.com/friends
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiJ9.xifbY4mh0sXoRwmLgY-L-bfXhOvJNPjUyCosWe6-IYmz7NGeYGZZWpa7Qc1_XJjMu8dFyqp-DNvtg7NVVyQJ5g
