@@ -2,7 +2,6 @@ package com.akvelon.facebook.controller.rest;
 
 import com.akvelon.facebook.controller.api.PostsApi;
 import com.akvelon.facebook.dto.PostDtoPage;
-import com.akvelon.facebook.dto.PostNewDto;
 import com.akvelon.facebook.service.interfaces.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

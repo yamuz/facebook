@@ -2,7 +2,6 @@ package com.akvelon.facebook.dto;
 
 import com.akvelon.facebook.entity.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;

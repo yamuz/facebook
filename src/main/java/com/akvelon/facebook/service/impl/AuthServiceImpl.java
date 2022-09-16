@@ -11,7 +11,6 @@ import com.akvelon.facebook.repository.VerificationTokenRepository;
 import com.akvelon.facebook.service.interfaces.AuthService;
 import com.akvelon.facebook.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

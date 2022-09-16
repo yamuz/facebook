@@ -2,7 +2,6 @@ package com.akvelon.facebook.service.interfaces;
 
 import com.akvelon.facebook.dto.PostDto;
 import com.akvelon.facebook.dto.PostNewDto;
-import com.akvelon.facebook.entity.UserGroup;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

@@ -13,9 +13,12 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
+    show-sql: true
     generate-ddl: true
     open-in-view: true
     properties:
+      hibernate:
+        format_sql: true
       javax:
         persistence:
           schema-generation:

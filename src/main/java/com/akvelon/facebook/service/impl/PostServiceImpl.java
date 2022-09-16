@@ -4,7 +4,6 @@ import com.akvelon.facebook.dto.PostDto;
 import com.akvelon.facebook.dto.PostNewDto;
 import com.akvelon.facebook.entity.FileInfo;
 import com.akvelon.facebook.entity.Post;
-import com.akvelon.facebook.entity.UserGroup;
 import com.akvelon.facebook.exception.EntityNotFoundException;
 import com.akvelon.facebook.repository.FilesRepository;
 import com.akvelon.facebook.repository.PostRepository;
@@ -48,8 +47,6 @@ public class PostServiceImpl implements PostService {
         this.userGroupRepository = userGroupRepository;
     }
 
-
-
     @CachePut(value = "postService", key = "#result.id", unless = "#result == null")
     @Transactional
     @Override
@@ -81,6 +78,7 @@ public class PostServiceImpl implements PostService {
         return PostDto.from(postSaved);
     }
 
+    @CachePut(value = "postService", key = "#result.id", unless = "#result == null")
     @Transactional
     @Override
     public PostDto saveToGroup(MultipartFile file, String postText, String ownerEmail, Long userGroupId) throws IOException {
@@ -118,8 +116,8 @@ public class PostServiceImpl implements PostService {
 
     @Cacheable(value = "postService", key = "#postId")
     @Override
-    public PostDto findById(Long id) {
-        return PostDto.from(postRepository.findById(id)
+    public PostDto findById(Long postId) {
+        return PostDto.from(postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("post not found by id")));
     }
 
